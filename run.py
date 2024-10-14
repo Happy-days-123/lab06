@@ -1,13 +1,13 @@
 """Example game showing a circle moving on screen."""
 import pygame
-
+from opponent import Opponent
 from game import Game
 from player import Player
 from food import FoodList
 from keys import pressed_keys, directions
 
 # TODO: Refactor draw to act on list of Sprite and draw all Sprites
-def draw(game: Game, player: Player, food_list: FoodList):
+def draw(game: Game, player: Player, food_list: FoodList, opponent: Opponent):
     """
     Draws the player and game on the screen.
     
@@ -29,6 +29,14 @@ def draw(game: Game, player: Player, food_list: FoodList):
             pygame.Vector2(f.x, f.y),
             f.size
         )
+    pygame.draw.circle(
+        game.screen,              #drawing the opponent
+        player.color,
+        pygame.Vector2(opponent.x, opponent.y),
+        opponent.size
+    )
+        
+        
     pygame.display.flip()
     
 
@@ -65,7 +73,12 @@ def main():
               speed = 300,
               color = "red"
     )
-    
+    opponent = Opponent(
+        x=500,
+        y=500,
+        size=40,
+        speed=5,
+        color="Red")
     # TODO: Initialize the Opponent
     
     # Initialze pygame
@@ -94,17 +107,18 @@ def main():
         player.move(game.deltaT, dirs)
 
         # TODO: move the Opponent
-
+        opponent.move(food_list)
+        
         if pygame.mouse.get_focused():
             player.move_to(pygame.mouse.get_pos())
         
         food_list.eat(player)
         # TODO: make the Opponent eat Food too
-
+        food_list.eat(opponent)
         food_list.move()
 
         # Draw the game
-        draw(game, player, food_list)
+        draw(game, player, food_list, opponent)
 
 
 # Run the main function

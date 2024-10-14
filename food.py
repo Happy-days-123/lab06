@@ -11,23 +11,9 @@ from character import Character
 class Food(Sprite):
     """Food for the Player to eat."""
     # TODO: refactor to extend Sprite
-    x: float
-    y: float
-    size: float
-
-    def move(self, dx: int, dy: int) -> Self:
-        """
-        Purpose: Moves the food by a given amount (dx, dy) in the x and y directions.
-        This simulates food drifting or moving slightly within the game world.
-        
-        Examples:
-            f = Food(x=100, y=100, size=10)
-            move(f, 5, -5) -> Food(105, 95, 10)
-            move(f, -10, 10) -> Food(95, 105, 10)
-        """
-        self.x += dx
-        self.y += dy
-        return self
+    #x: float
+   # y: float
+   # size: float
 
 
     def distance(self, spr: Sprite) -> float:
@@ -43,8 +29,7 @@ class Food(Sprite):
         dx = self.x - spr.x
         dy = self.y - spr.y
         return math.sqrt(dx**2 + dy**2)
-
-
+    
     def hit(self, spr: Sprite) -> bool:
         """
         Purpose: Determines whether a Player and Food are touching

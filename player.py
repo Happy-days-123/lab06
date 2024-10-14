@@ -2,6 +2,7 @@
 import sys
 from typing import List, Tuple
 from sprite import Sprite
+from character import Character
 from dataclasses import dataclass
 # Get the Python version as a tuple
 python_version = sys.version_info
@@ -14,7 +15,7 @@ else:
     from typing_extensions import Self
 
 @dataclass
-class Player:
+class Player(Sprite):
     """Describes the player."""
     # TODO: refactor to extend Character
     x: float
@@ -47,35 +48,6 @@ class Player:
             self.x += amount
         return self
     
-    
-    def move_to(self, mouse: Tuple[int, int]) -> Self:
-        """
-        Purpose: Moves the player directly to the given mouse coordinates (x, y).
-        This simulates the player moving to the position of a mouse click or cursor location.
-        
-        Examples:
-            player = Player(x=100, y=100, size=10, speed=10, color="red")
-            move_to(player, (150, 200)) -> Player(150, 200, 10, 10, "red")
-            move_to(player, (0, 0))     -> Player(0, 0, 10, 10, "red")
-        """
-        self.x = mouse[0]
-        self.y = mouse[1]
-        return self
-
-
-    def eat(self) -> None:
-        """
-        Purpose: Increases the player's food consumption count by 1. This method
-        tracks how many pieces of food the player has eaten.
-        
-        Examples:
-            player = Player(x=100, y=100, size=10, speed=10, color="red", count=0)
-            eat(player) -> Player with count = 1
-            eat(player) -> Player with count = 2
-        """
-        self.count += 1
-
-
     def resize(self) -> None:
         """
         Purpose: Resizes the player based on the amount of food consumed. The player's size
@@ -89,4 +61,9 @@ class Player:
             resize(player) -> Player with size = 10
         """
         self.size = 10 + self.count
+    
+    
+
+
+    
 
